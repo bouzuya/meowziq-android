@@ -3,4 +3,6 @@ machine:
     version: openjdk7
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
-
+test:
+  override:
+    - echo 'do nothing'
