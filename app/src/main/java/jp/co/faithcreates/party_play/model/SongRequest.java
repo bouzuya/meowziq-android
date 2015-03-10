@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play;
+package jp.co.faithcreates.party_play.model;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-class SongRequest extends AsyncTask<Song, Void, String> {
+public class SongRequest extends AsyncTask<Song, Void, String> {
     private final String baseUrl;
 
     public SongRequest(String baseUrl) {

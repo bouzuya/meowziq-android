@@ -1,6 +1,6 @@
-package jp.co.faithcreates.party_play;
+package jp.co.faithcreates.party_play.model;
 
-class Song {
+public class Song {
     private String artist;
     private String path;
     private String title;
@@ -27,5 +27,18 @@ class Song {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String id;
+    public String content;
+
+    public Song(String id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return content;
     }
 }

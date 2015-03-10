@@ -1,47 +1,34 @@
 package jp.co.faithcreates.party_play;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 
-public class MainActivity extends ActionBarActivity {
-    private ArrayAdapter<Song> adapter;
+import jp.co.faithcreates.party_play.model.Artist;
+import jp.co.faithcreates.party_play.model.Song;
+import jp.co.faithcreates.party_play.model.SongRepository;
+import jp.co.faithcreates.party_play.model.SongRequest;
+import jp.co.faithcreates.party_play.ui.ArtistFragment;
+import jp.co.faithcreates.party_play.ui.SettingsActivity;
+import jp.co.faithcreates.party_play.ui.SongFragment;
+
+public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new SongAdapter(this, R.layout.list_item);
-
         reload();
 
         Button button = (Button) findViewById(R.id.button);
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Song item = adapter.getItem(position);
-
-                request(item);
-            }
-        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,28 +55,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void reload() {
-        adapter.clear();
-        ContentResolver resolver = getContentResolver();
-
-        boolean useInternal = false;
-        Uri uri = useInternal
-                ? MediaStore.Audio.Media.INTERNAL_CONTENT_URI
-                : MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor cursor = resolver.query(uri, null, null, null, null);
-        while (cursor.moveToNext()) {
-            String id = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-            String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-            String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-            String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-            Song song = new Song();
-            song.setArtist(artist);
-            song.setPath(path);
-            song.setTitle(title);
-            adapter.add(song);
-        }
-
-        // TODO: try catch
-        cursor.close();
+        SongRepository.loadFromContentResolver(getContentResolver());
     }
 
     @Override
@@ -108,5 +74,16 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Artist artist) {
+        Log.d("party-play", artist.toString());
+    }
+
+    @Override
+    public void onFragmentInteraction(Song song) {
+        Log.d("party-play", song.toString());
+        request(song);
     }
 }
