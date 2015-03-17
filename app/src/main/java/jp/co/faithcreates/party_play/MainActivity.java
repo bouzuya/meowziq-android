@@ -103,4 +103,14 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         Log.d("party-play", "selected song : " + song.toString());
         request(song);
     }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            manager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
