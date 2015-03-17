@@ -28,10 +28,8 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         ArtistFragment artistFragment = new ArtistFragment();
-
-        FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.main_layout, artistFragment);
         transaction.commit();
 
