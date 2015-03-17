@@ -89,6 +89,9 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         SongFragment songFragment = new SongFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("artistName", artist.content);
+        songFragment.setArguments(bundle);
 
         transaction.replace(R.id.main_layout, songFragment);
         transaction.addToBackStack(null);

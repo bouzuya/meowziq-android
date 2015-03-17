@@ -2,13 +2,13 @@ package jp.co.faithcreates.party_play.ui;
 
 import android.app.Activity;
 import android.app.ListFragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.co.faithcreates.party_play.R;
 import jp.co.faithcreates.party_play.model.Song;
@@ -22,11 +22,17 @@ import jp.co.faithcreates.party_play.model.SongRepository;
  * interface.
  */
 public class SongFragment extends ListFragment {
-
+    private static final String ARTIST_NAME = "artistName";
+    private String mArtistName;
+    // TODO:
+    private List<Song> mSongList;
     private OnFragmentInteractionListener mListener;
 
-    public static SongFragment newInstance() {
+    public static SongFragment newInstance(String artistName) {
         SongFragment fragment = new SongFragment();
+        Bundle args = new Bundle();
+        args.putString(ARTIST_NAME, artistName);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -41,8 +47,18 @@ public class SongFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mArtistName = getArguments().getString(ARTIST_NAME);
+        }
+
+        mSongList = new ArrayList<>();
+        for (Song song : SongRepository.mSongList) {
+            if (song.getArtist().equals(mArtistName)) {
+                mSongList.add(song);
+            }
+        }
         setListAdapter(new ArrayAdapter<>(getActivity(),
-                R.layout.list_item2, android.R.id.text1, SongRepository.mSongList));
+                R.layout.list_item2, android.R.id.text1, mSongList));
     }
 
 
@@ -71,7 +87,7 @@ public class SongFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(SongRepository.mSongList.get(position));
+            mListener.onFragmentInteraction(mSongList.get(position));
         }
     }
 
