@@ -45,7 +45,7 @@ public class ArtistFragment extends Fragment implements AbsListView.OnItemClickL
         super.onCreate(savedInstanceState);
 
         mAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1,
+                R.layout.list_item2,
                 android.R.id.text1,
                 ArtistRepository.getArtistList());
     }
