@@ -1,7 +1,9 @@
 package jp.co.faithcreates.party_play;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,9 +96,25 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
     }
 
     @Override
-    public void onFragmentInteraction(Song song) {
+    public void onFragmentInteraction(final Song song) {
         Log.d("party-play", "selected song : " + song.toString());
-        request(song);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("転送しますか？")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        request(song);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
