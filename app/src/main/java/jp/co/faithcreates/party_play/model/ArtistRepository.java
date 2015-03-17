@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ArtistRepository {
 
@@ -25,7 +26,7 @@ public class ArtistRepository {
     public static void loadFromSongList(List<Song> songList) {
         artistList.clear();
         artistMap.clear();
-        Set<Artist> artistSet = new HashSet<>();
+        Set<Artist> artistSet = new TreeSet<>();
         for (Song song : songList) {
             Artist artist = new Artist("id", song.getArtist());
             artistSet.add(artist);
