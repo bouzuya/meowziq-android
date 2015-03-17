@@ -1,5 +1,7 @@
 package jp.co.faithcreates.party_play;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +27,13 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FragmentManager manager = getFragmentManager();
+        ArtistFragment artistFragment = new ArtistFragment();
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.main_layout, artistFragment);
+        transaction.commit();
 
         reload();
 
@@ -78,12 +87,20 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Artist artist) {
-        Log.d("party-play", artist.toString());
+        Log.d("party-play", "selected artist :" + artist.toString());
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        SongFragment songFragment = new SongFragment();
+
+        transaction.replace(R.id.main_layout, songFragment);
+        transaction.addToBackStack(null);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
     }
 
     @Override
     public void onFragmentInteraction(Song song) {
-        Log.d("party-play", song.toString());
+        Log.d("party-play", "selected song : " + song.toString());
         request(song);
     }
 }
