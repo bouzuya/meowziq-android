@@ -1,5 +1,6 @@
 package jp.co.faithcreates.party_play;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import jp.co.faithcreates.party_play.model.Artist;
 import jp.co.faithcreates.party_play.model.Song;
@@ -36,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         reload();
     }
 
-    private void request(Song song) {
+    private void request(final Song song) {
         Log.d("party-play", "request");
         Log.d("party-play", song.getPath());
 
@@ -49,7 +51,15 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
             return;
         }
 
-        SongRequest task = new SongRequest(baseUrl);
+        final Activity activity = this;
+        Toast.makeText(this, song.getTitle() + "を転送しています。", Toast.LENGTH_LONG).show();
+        final SongRequest task = new SongRequest(baseUrl) {
+            @Override
+            protected void onPostExecute(String result) {
+                String message = song.getTitle() + "の転送を完了しました。";
+                Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+            }
+        };
         task.execute(song);
     }
 
