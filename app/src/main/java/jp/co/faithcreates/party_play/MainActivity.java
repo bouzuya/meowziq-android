@@ -34,14 +34,6 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         transaction.commit();
 
         reload();
-
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reload();
-            }
-        });
     }
 
     private void request(Song song) {
@@ -75,9 +67,13 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
+        switch (id) {
+            case R.id.action_reload:
+                reload();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
