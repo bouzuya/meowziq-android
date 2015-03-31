@@ -28,7 +28,7 @@ public class SongRequest extends AsyncTask<Song, Void, String> {
 
         String url = baseUrl + "/songs";
 
-        Log.d("party-play", "request " + url);
+        Log.d("meowziq", "request " + url);
         HttpPost httpPost = new HttpPost(url);
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -44,7 +44,7 @@ public class SongRequest extends AsyncTask<Song, Void, String> {
             input.read(binary);
             input.close();
         } catch (IOException e) {
-            Log.d("party-play", e.getMessage());
+            Log.d("meowziq", e.getMessage());
             e.printStackTrace();
         }
         builder.addBinaryBody("file", binary, ContentType.APPLICATION_OCTET_STREAM, path);
@@ -56,7 +56,7 @@ public class SongRequest extends AsyncTask<Song, Void, String> {
         HttpClient client = new DefaultHttpClient();
         try {
             HttpResponse httpResponse = client.execute(httpPost);
-            Log.d("party-play", httpResponse.getStatusLine().toString());
+            Log.d("meowziq", httpResponse.getStatusLine().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

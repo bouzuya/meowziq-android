@@ -1,4 +1,4 @@
-# party-play for Android
+# :scream_cat: meowziq for Android :scream_cat:
 
-A party-play client for Android
+A meowziq client for Android
 

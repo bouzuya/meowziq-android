@@ -39,15 +39,15 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
     }
 
     private void request(final Song song) {
-        Log.d("party-play", "request");
-        Log.d("party-play", song.getPath());
+        Log.d("meowziq", "request");
+        Log.d("meowziq", song.getPath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         String baseUrl = prefs.getString("server_url", null);
 
         if (baseUrl == null) {
-            Log.d("party-play", "url is empty");
+            Log.d("meowziq", "url is empty");
             return;
         }
 
@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Artist artist) {
-        Log.d("party-play", "selected artist :" + artist.toString());
+        Log.d("meowziq", "selected artist :" + artist.toString());
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         SongFragment songFragment = new SongFragment();
@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(final Song song) {
-        Log.d("party-play", "selected song : " + song.toString());
+        Log.d("meowziq", "selected song : " + song.toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("転送しますか？")
