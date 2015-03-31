@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "jp.co.faithcreates.party_play"
+        applicationId "jp.co.faithcreates.meowziq"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
