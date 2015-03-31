@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play.ui;
+package jp.co.faithcreates.meowziq.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import jp.co.faithcreates.party_play.R;
-import jp.co.faithcreates.party_play.model.Artist;
-import jp.co.faithcreates.party_play.model.ArtistRepository;
+import jp.co.faithcreates.meowziq.R;
+import jp.co.faithcreates.meowziq.model.Artist;
+import jp.co.faithcreates.meowziq.model.ArtistRepository;
 
 /**
  * A fragment representing a list of Items.

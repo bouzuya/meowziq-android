@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play.ui;
+package jp.co.faithcreates.meowziq.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 
 import java.util.List;
 
-import jp.co.faithcreates.party_play.R;
+import jp.co.faithcreates.meowziq.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

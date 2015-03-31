@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play;
+package jp.co.faithcreates.meowziq;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,13 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import jp.co.faithcreates.party_play.model.Artist;
-import jp.co.faithcreates.party_play.model.Song;
-import jp.co.faithcreates.party_play.model.SongRepository;
-import jp.co.faithcreates.party_play.model.SongRequest;
-import jp.co.faithcreates.party_play.ui.ArtistFragment;
-import jp.co.faithcreates.party_play.ui.SettingsActivity;
-import jp.co.faithcreates.party_play.ui.SongFragment;
+import jp.co.faithcreates.meowziq.model.Artist;
+import jp.co.faithcreates.meowziq.model.Song;
+import jp.co.faithcreates.meowziq.model.SongRepository;
+import jp.co.faithcreates.meowziq.model.SongRequest;
+import jp.co.faithcreates.meowziq.ui.ArtistFragment;
+import jp.co.faithcreates.meowziq.ui.SettingsActivity;
+import jp.co.faithcreates.meowziq.ui.SongFragment;
 
 public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener {
 

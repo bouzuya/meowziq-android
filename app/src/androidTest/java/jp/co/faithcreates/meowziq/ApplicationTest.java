@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play;
+package jp.co.faithcreates.meowziq;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play.model;
+package jp.co.faithcreates.meowziq.model;
 
 import android.content.ContentResolver;
 import android.database.Cursor;

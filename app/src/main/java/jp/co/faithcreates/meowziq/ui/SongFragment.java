@@ -1,4 +1,4 @@
-package jp.co.faithcreates.party_play.ui;
+package jp.co.faithcreates.meowziq.ui;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -10,9 +10,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.faithcreates.party_play.R;
-import jp.co.faithcreates.party_play.model.Song;
-import jp.co.faithcreates.party_play.model.SongRepository;
+import jp.co.faithcreates.meowziq.R;
+import jp.co.faithcreates.meowziq.model.Song;
+import jp.co.faithcreates.meowziq.model.SongRepository;
 
 /**
  * A fragment representing a list of Items.
