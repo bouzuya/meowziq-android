@@ -26,7 +26,7 @@ public class SongRequest extends AsyncTask<Song, Void, String> {
     @Override
     protected String doInBackground(Song... songs) {
 
-        String url = baseUrl + "/songs/add";
+        String url = baseUrl + "/songs";
 
         Log.d("party-play", "request " + url);
         HttpPost httpPost = new HttpPost(url);
