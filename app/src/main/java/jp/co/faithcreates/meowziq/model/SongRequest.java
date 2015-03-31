@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MIME;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -48,8 +49,8 @@ public class SongRequest extends AsyncTask<Song, Void, String> {
             e.printStackTrace();
         }
         builder.addBinaryBody("file", binary, ContentType.APPLICATION_OCTET_STREAM, path);
-        builder.addTextBody("title", song.getTitle());
-        builder.addTextBody("artist", song.getArtist());
+        builder.addTextBody("title", song.getTitle(), ContentType.create("text/plain", MIME.UTF8_CHARSET));
+        builder.addTextBody("artist", song.getArtist(), ContentType.create("text/plain", MIME.UTF8_CHARSET));
 
         httpPost.setEntity(builder.build());
 
