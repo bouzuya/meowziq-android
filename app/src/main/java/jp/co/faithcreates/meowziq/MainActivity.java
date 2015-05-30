@@ -25,6 +25,8 @@ import jp.co.faithcreates.meowziq.ui.SongFragment;
 
 public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener {
 
+    private static final String TAG = "meowziq";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +41,15 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
     }
 
     private void request(final Song song) {
-        Log.d("meowziq", "request");
-        Log.d("meowziq", song.getPath());
+        Log.d(TAG, "request");
+        Log.d(TAG, song.getPath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         String baseUrl = prefs.getString("server_url", null);
 
         if (baseUrl == null) {
-            Log.d("meowziq", "url is empty");
+            Log.d(TAG, "url is empty");
             return;
         }
 
@@ -91,7 +93,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Artist artist) {
-        Log.d("meowziq", "selected artist :" + artist.toString());
+        Log.d(TAG, "selected artist :" + artist.toString());
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         SongFragment songFragment = new SongFragment();
@@ -107,7 +109,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(final Song song) {
-        Log.d("meowziq", "selected song : " + song.toString());
+        Log.d(TAG, "selected song : " + song.toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("転送しますか？")
