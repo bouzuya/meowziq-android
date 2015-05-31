@@ -20,10 +20,11 @@ import jp.co.faithcreates.meowziq.model.Song;
 import jp.co.faithcreates.meowziq.model.SongRepository;
 import jp.co.faithcreates.meowziq.model.SongRequest;
 import jp.co.faithcreates.meowziq.ui.ArtistFragment;
+import jp.co.faithcreates.meowziq.ui.HomeFragment;
 import jp.co.faithcreates.meowziq.ui.SettingsActivity;
 import jp.co.faithcreates.meowziq.ui.SongFragment;
 
-public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "meowziq";
 
@@ -33,11 +34,9 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         setContentView(R.layout.activity_main);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        ArtistFragment artistFragment = new ArtistFragment();
-        transaction.add(R.id.main_layout, artistFragment);
+        HomeFragment homeFragment = new HomeFragment();
+        transaction.add(R.id.main_layout, homeFragment);
         transaction.commit();
-
-        reload();
     }
 
     private void request(final Song song) {
@@ -136,6 +135,27 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
             manager.popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(String name) {
+        if (name.equals("local")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ArtistFragment artistFragment = new ArtistFragment();
+                    transaction.replace(R.id.main_layout, artistFragment);
+                    transaction.addToBackStack(null);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.commit();
+
+                    reload(); // FIXME:
+                }
+            });
+        } else {
+            Log.d(TAG, name + " is not implemented yet");
         }
     }
 }
