@@ -16,11 +16,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import jp.co.faithcreates.meowziq.model.Artist;
+import jp.co.faithcreates.meowziq.model.ServerSongRepository;
 import jp.co.faithcreates.meowziq.model.Song;
 import jp.co.faithcreates.meowziq.model.SongRepository;
 import jp.co.faithcreates.meowziq.model.SongRequest;
 import jp.co.faithcreates.meowziq.ui.ArtistFragment;
 import jp.co.faithcreates.meowziq.ui.HomeFragment;
+import jp.co.faithcreates.meowziq.ui.ServerSongFragment;
 import jp.co.faithcreates.meowziq.ui.SettingsActivity;
 import jp.co.faithcreates.meowziq.ui.SongFragment;
 
@@ -62,6 +64,19 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
             }
         };
         task.execute(song);
+    }
+
+    private void setServerUrl() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+                getApplicationContext());
+        String baseUrl = prefs.getString("server_url", null);
+
+        if (baseUrl == null) {
+            Log.d(TAG, "url is empty");
+            return;
+        }
+
+        ServerSongRepository.baseUrl = baseUrl;
     }
 
     private void reload() {
@@ -154,8 +169,22 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
                     reload(); // FIXME:
                 }
             });
+        } else if (name.equals("remote")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setServerUrl(); // FIXME:
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ServerSongFragment serverSongFragment = new ServerSongFragment();
+                    transaction.replace(R.id.main_layout, serverSongFragment);
+                    transaction.addToBackStack(null);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.commit();
+                }
+            });
         } else {
-            Log.d(TAG, name + " is not implemented yet");
+            Log.e(TAG, name + " is unkown button");
         }
     }
 }
