@@ -67,7 +67,8 @@ public class ServerSongRequest extends AsyncTask<Void, Void, List<Song>> {
     }
 
     private Song buildSong(JSONObject jsonObject) throws JSONException {
-        Song song = new Song(jsonObject.getString("id"), "");
+        String s = jsonObject.getString("artist") + " - " + jsonObject.getString("title");
+        Song song = new Song(jsonObject.getString("id"), s);
         song.setArtist(jsonObject.getString("artist"));
         song.setTitle(jsonObject.getString("title"));
         return song;
