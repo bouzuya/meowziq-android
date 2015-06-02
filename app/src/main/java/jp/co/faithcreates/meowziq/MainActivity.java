@@ -16,14 +16,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import jp.co.faithcreates.meowziq.model.Artist;
+import jp.co.faithcreates.meowziq.model.ServerSongRepository;
 import jp.co.faithcreates.meowziq.model.Song;
 import jp.co.faithcreates.meowziq.model.SongRepository;
 import jp.co.faithcreates.meowziq.model.SongRequest;
 import jp.co.faithcreates.meowziq.ui.ArtistFragment;
+import jp.co.faithcreates.meowziq.ui.HomeFragment;
+import jp.co.faithcreates.meowziq.ui.ServerSongFragment;
 import jp.co.faithcreates.meowziq.ui.SettingsActivity;
 import jp.co.faithcreates.meowziq.ui.SongFragment;
 
-public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements SongFragment.OnFragmentInteractionListener, ArtistFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener {
+
+    private static final String TAG = "meowziq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,23 +36,21 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         setContentView(R.layout.activity_main);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        ArtistFragment artistFragment = new ArtistFragment();
-        transaction.add(R.id.main_layout, artistFragment);
+        HomeFragment homeFragment = new HomeFragment();
+        transaction.add(R.id.main_layout, homeFragment);
         transaction.commit();
-
-        reload();
     }
 
     private void request(final Song song) {
-        Log.d("meowziq", "request");
-        Log.d("meowziq", song.getPath());
+        Log.d(TAG, "request");
+        Log.d(TAG, song.getPath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         String baseUrl = prefs.getString("server_url", null);
 
         if (baseUrl == null) {
-            Log.d("meowziq", "url is empty");
+            Log.d(TAG, "url is empty");
             return;
         }
 
@@ -61,6 +64,19 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
             }
         };
         task.execute(song);
+    }
+
+    private void setServerUrl() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+                getApplicationContext());
+        String baseUrl = prefs.getString("server_url", null);
+
+        if (baseUrl == null) {
+            Log.d(TAG, "url is empty");
+            return;
+        }
+
+        ServerSongRepository.baseUrl = baseUrl;
     }
 
     private void reload() {
@@ -91,7 +107,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Artist artist) {
-        Log.d("meowziq", "selected artist :" + artist.toString());
+        Log.d(TAG, "selected artist :" + artist.toString());
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         SongFragment songFragment = new SongFragment();
@@ -107,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
 
     @Override
     public void onFragmentInteraction(final Song song) {
-        Log.d("meowziq", "selected song : " + song.toString());
+        Log.d(TAG, "selected song : " + song.toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("転送しますか？")
@@ -134,6 +150,41 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
             manager.popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(String name) {
+        if (name.equals("local")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ArtistFragment artistFragment = new ArtistFragment();
+                    transaction.replace(R.id.main_layout, artistFragment);
+                    transaction.addToBackStack(null);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.commit();
+
+                    reload(); // FIXME:
+                }
+            });
+        } else if (name.equals("remote")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setServerUrl(); // FIXME:
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    ServerSongFragment serverSongFragment = new ServerSongFragment();
+                    transaction.replace(R.id.main_layout, serverSongFragment);
+                    transaction.addToBackStack(null);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.commit();
+                }
+            });
+        } else {
+            Log.e(TAG, name + " is unkown button");
         }
     }
 }
