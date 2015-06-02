@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import jp.co.faithcreates.meowziq.model.Artist;
 import jp.co.faithcreates.meowziq.model.ServerSongRepository;
+import jp.co.faithcreates.meowziq.model.ServerStatusRepository;
 import jp.co.faithcreates.meowziq.model.Song;
 import jp.co.faithcreates.meowziq.model.SongRepository;
 import jp.co.faithcreates.meowziq.model.SongRequest;
@@ -77,6 +78,7 @@ public class MainActivity extends ActionBarActivity implements SongFragment.OnFr
         }
 
         ServerSongRepository.baseUrl = baseUrl;
+        ServerStatusRepository.baseUrl = baseUrl;
     }
 
     private void reload() {
